@@ -10,28 +10,20 @@ use bevy_fluent::{
 
 pub fn setup(
     mut commands: Commands,
-    // mut assets: ResMut<Assets<BundlesAsset>>,
     asset_server: Res<AssetServer>,
-    // loaded: Option<Res<Loaded>>,
     locales: Res<Locales>,
 ) {
-    // if let Some(handle) = handle {
-    //     error!(remove = ?handle.0.path());
-    //     assets.remove(&handle.0);
-    //     commands.remove_resource::<Loaded>();
-    // }
     let locale = locales[0].clone();
     error!(%locale);
     let handle =
         asset_server.load_with_settings("locales/.ftl.ron", move |settings: &mut Settings| {
-            settings.locales.push(Locale {
-                requested: vec![locale.clone()],
-                ..default()
-            });
+            settings.locales = vec![
+                Locale {
+                    requested: vec![locale.clone(), "en-US".parse().unwrap()],
+                    ..default()
+                },
+            ];
         });
-    // if loaded.is_some() {
-    //     asset_server.asset_server.reload("locales/.ftl.ron")
-    // }
     error!(new = ?handle.path());
     commands.insert_resource(Loading(handle));
 }

@@ -171,6 +171,7 @@ impl FluentBundleLoader for Bundle {
                     path = parent.join(&path);
                 }
             }
+            debug!("{}", path.clone().display());
             let loaded = load_context.load_direct(path).await?;
             let resource = loaded.get::<ResourceAsset>().unwrap();
             if let Err(errors) = self.add_resource(resource.0.clone()) {
