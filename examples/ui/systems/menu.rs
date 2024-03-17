@@ -8,6 +8,8 @@ use bevy::prelude::*;
 use bevy_fluent::prelude::*;
 use fluent_content::Content;
 
+const CARGO_VERSION: &str = env!("CARGO_PKG_VERSION");
+
 pub fn setup(
     mut commands: Commands,
     assets: Res<Assets<BundlesAsset>>,
@@ -22,6 +24,11 @@ pub fn setup(
         .content("choose-language")
         .unwrap()
         .to_sentence_case();
+
+    let version = bundles
+        .content(&format!("version.?version={}", CARGO_VERSION))
+        .unwrap();
+
     // camera
     commands.spawn(Camera2dBundle::default()).insert(Menu);
     // ui
@@ -41,6 +48,33 @@ pub fn setup(
         })
         .insert(Menu)
         .with_children(|parent| {
+            // Version display
+            parent
+                .spawn(NodeBundle {
+                    style: Style {
+                        width: Val::Percent(100.0),
+                        height: Val::Percent(25.0),
+                        justify_content: JustifyContent::Center,
+                        align_items: AlignItems::Center,
+                        ..default()
+                    },
+                    background_color: Color::DARK_GRAY.into(),
+                    ..default()
+                })
+                .with_children(|parent| {
+                    parent.spawn(TextBundle {
+                        text: Text::from_section(
+                            &version,
+                            TextStyle {
+                                font: font.0.clone(),
+                                font_size: 24.0,
+                                color: Color::WHITE,
+                            },
+                        ),
+                        ..default()
+                    });
+                });
+
             // Header
             parent
                 .spawn(NodeBundle {
