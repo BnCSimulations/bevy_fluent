@@ -4,15 +4,14 @@ use super::{Error, Result};
 use bevy::{
     asset::{io::Reader, AssetLoader, AsyncReadExt, LoadContext},
     prelude::*,
-    reflect::{TypePath, TypeUuid},
+    reflect::TypePath,
     utils::{tracing::instrument, BoxedFuture},
 };
 use fluent::FluentResource;
 use std::sync::Arc;
 
 /// [`FluentResource`](fluent::FluentResource) wrapper
-#[derive(Asset, Clone, Debug, Deref, TypePath, TypeUuid)]
-#[uuid = "0b2367cb-fb4a-4746-a305-df98b26dddf6"]
+#[derive(Asset, Clone, Debug, Deref, TypePath)]
 pub struct ResourceAsset(pub(crate) Arc<FluentResource>);
 
 impl ResourceAsset {

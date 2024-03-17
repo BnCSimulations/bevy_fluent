@@ -5,7 +5,7 @@ use crate::{resources::FallbackChain, ResourceAsset};
 use bevy::{
     asset::{io::Reader, AssetLoader, AsyncReadExt, LoadContext},
     prelude::*,
-    reflect::{TypePath, TypeUuid},
+    reflect::TypePath,
     utils::BoxedFuture,
 };
 use fluent::{bundle::FluentBundle, FluentArgs, FluentResource};
@@ -27,8 +27,7 @@ use unic_langid::LanguageIdentifier;
 type Bundle = FluentBundle<Arc<FluentResource>, IntlLangMemoizer>;
 
 /// Collection of [`FluentBundle`]s
-#[derive(Asset, Default, Deref, TypePath, TypeUuid)]
-#[uuid = "1233201a-c0db-486f-be31-4a608d406f03"]
+#[derive(Asset, Default, Deref, TypePath)]
 pub struct BundlesAsset(pub IndexMap<String, Bundle>);
 
 impl<'a, T, U> Content<'a, T, U> for BundlesAsset

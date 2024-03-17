@@ -25,7 +25,7 @@ fn main() {
             langid!("ru-RU"),
         ]))
         .init_resource::<Font>()
-        .add_state::<GameState>()
+        .init_state::<GameState>()
         .add_systems(OnEnter(GameState::Load), load::setup)
         .add_systems(Update, load::update.run_if(in_state(GameState::Load)))
         .add_systems(OnEnter(GameState::Menu), menu::setup)
